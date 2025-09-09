@@ -35,6 +35,8 @@
 }
 
 .mailandpasswordconnexion {
+ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+
   border-radius: 30px;
   border: 20px;
   height: 4vh;
@@ -62,7 +64,8 @@
   cursor: pointer;
   overflow: hidden;
   transition: all .6s cubic-bezier(0.23, 1, 0.32, 1);
-  box-shadow: 0 0 0 2px greenyellow inset;
+  
+   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
   isolation: isolate;
 }
 
