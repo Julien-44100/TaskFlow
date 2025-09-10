@@ -4,7 +4,10 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+// import dynamic from "next/dynamic";
 
+// on désactive le SSR pour MetaMask
+// const WalletButton = dynamic(() => import("../componants/WalletButton/WalletButton"), { ssr: false });
 export default function Home() {
   const router = useRouter();
 
@@ -81,6 +84,7 @@ export default function Home() {
 
 
       <ToastContainer position="top-right" autoClose={3000} />
+      {/* <WalletButton /> */}
     </div>
   );
 }
