@@ -1,10 +1,11 @@
+// src/lib/api.ts
 type Opts = { method?: string; body?: any };
 
 const BASE = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
 
 function buildUrl(path: string) {
-  if (/^https?:\/\//i.test(path)) return path;              // URL absolue → on n'ajoute rien
-  if (!BASE) return path.startsWith("/") ? path : `/${path}`; // même origine
+  if (/^https?:\/\//i.test(path)) return path;              // URL absolue → ne pas préfixer
+  if (!BASE) return path.startsWith("/") ? path : `/${path}`; // même origine (Next)
   return `${BASE}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
