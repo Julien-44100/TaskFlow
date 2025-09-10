@@ -1,14 +1,13 @@
-
 "use client";
 import Link from "next/link";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import styles from "./page.module.css";
-import { api } from "@/lib/api";
+import styles from "../page.module.css";
+import { api } from "@/lib/api"; // garde l'import, pas besoin de redéclarer
 
-export default function Home() {
+export default function Inscription() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,19 +19,18 @@ export default function Home() {
 
     setLoading(true);
     try {
-      // Adapte le path selon ton backend: /api/auth/login, /auth/login…
-      const { ok, status, data } = await api("/api/auth/login", {
-        method: "POST",
-        body: { email, password },
-      });
+      // 👉 Inscription
+     const { ok, status, data } = await api("http://localhost:3001/api/auth/register", {
+  method: "POST",
+  body: { email, password },
+});
 
+      
       if (ok) {
-        toast.success("Connexion approuvée ✅");
-        // si ton backend renvoie un token, tu peux le stocker ici
-        // localStorage.setItem("token", data.token)
-        router.push("/Actuality"); // ou ta route réelle
-      } else if (status === 401) {
-        toast.error("E-mail ou mot de passe incorrect.");
+        toast.success("Inscription effectuée ✅");
+        router.push("/"); // redirige vers connexion
+      } else if (status === 409) {
+        toast.error("Un compte existe déjà avec cet e-mail.");
       } else {
         toast.error(data?.message ?? "Erreur serveur");
       }
@@ -46,13 +44,13 @@ export default function Home() {
 
   const goSignup = (e: React.MouseEvent) => {
     e.preventDefault();
-    router.push("/inscription"); // page d'inscription si tu l’as
+    router.push("/"); // vers connexion
   };
 
   return (
     <div className={styles.page}>
       <div className={styles.cardconnexion}>
-        <h1 className={styles.titleconnexionandmembers}>Connexion</h1>
+        <h1 className={styles.titleconnexionandmembers}>Inscription</h1>
 
         <form className={styles.formconnexion} onSubmit={handleLogin}>
           <label htmlFor="email" className={styles.mailandpasswordtitle}>
@@ -82,7 +80,7 @@ export default function Home() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
+            autoComplete="new-password"
           />
 
           <button
@@ -94,19 +92,19 @@ export default function Home() {
             <svg viewBox="0 0 24 24" className={styles.arrtwo} xmlns="http://www.w3.org/2000/svg">
               <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
             </svg>
-            <span className={styles.text}>{loading ? "Connexion..." : "Se connecter"}</span>
+            <span className={styles.text}>{loading ? "Inscription..." : "Créer un compte"}</span>
             <span className={styles.circle}></span>
             <svg viewBox="0 0 24 24" className={styles.arrone} xmlns="http://www.w3.org/2000/svg">
               <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
             </svg>
           </button>
 
-          <p className={styles.titleconnexionandmembers}>Pas encore membre ?</p>
-          <Link href="/inscription" className={styles.buttonconnexionandmembers} onClick={goSignup}>
+          <p className={styles.titleconnexionandmembers}>Déjà membre ?</p>
+          <Link href="/" className={styles.buttonconnexionandmembers} onClick={goSignup}>
             <svg viewBox="0 0 24 24" className={styles.arrtwo} xmlns="http://www.w3.org/2000/svg">
               <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
             </svg>
-            <span className={styles.text}>S'inscrire</span>
+            <span className={styles.text}>Se connecter</span>
             <span className={styles.circle}></span>
             <svg viewBox="0 0 24 24" className={styles.arrone} xmlns="http://www.w3.org/2000/svg">
               <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
