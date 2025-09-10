@@ -1,6 +1,6 @@
-.navbar {
+.footer {
   background-color: rgba(107, 253, 107, 0.64);
-  height: 100px;
+  height: 88px;
   width: 100%;
 
   display: flex;
@@ -8,9 +8,10 @@
   justify-content: center;  
 }
 
-.logo {
+.copywright {
    color: rgba(218, 91, 0, 0.50);
   font-size: 24px;
   font-weight: 700;
   font-family: 'Roboto Slab', serif;
 }
+
