@@ -1,16 +1,10 @@
 // src/lib/api.ts
 type Opts = { method?: string; body?: any };
 
-const BASE = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
-
-function buildUrl(path: string) {
-  if (/^https?:\/\//i.test(path)) return path;              // URL absolue → ne pas préfixer
-  if (!BASE) return path.startsWith("/") ? path : `/${path}`; // même origine (Next)
-  return `${BASE}${path.startsWith("/") ? path : `/${path}`}`;
-}
-
 export async function api<T = any>(path: string, options: Opts = {}) {
-  const url = buildUrl(path);
+  // Chemin relatif, pas d'API_URL
+  const url = path.startsWith("/") ? path : `/${path}`;
+
   const res = await fetch(url, {
     method: options.method ?? "GET",
     headers: { "Content-Type": "application/json" },

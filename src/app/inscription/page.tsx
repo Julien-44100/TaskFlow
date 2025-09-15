@@ -5,7 +5,6 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import styles from "../page.module.css";
-import { api } from "@/lib/api"; // garde l'import, pas besoin de redéclarer
 
 export default function Inscription() {
   const router = useRouter();
@@ -13,37 +12,28 @@ export default function Inscription() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
 
+ 
+    if (!email || !password) {
+      toast.error("Veuillez renseigner un e-mail et un mot de passe.");
+      return;
+    }
+
     setLoading(true);
     try {
-      // 👉 Inscription
-      const { ok, status, data } = await api("/api/auth/register", {
-        method: "POST",
-        body: { email, password },
-      });
+ 
+      toast.success("Compte prêt côté front ✅ (aucun appel serveur)");
 
-      if (ok) {
-        toast.success("Inscription effectuée ✅");
-        router.push("/"); // redirige vers connexion
-      } else if (status === 409) {
-        toast.error("Un compte existe déjà avec cet e-mail.");
-      } else {
-        toast.error(data?.message ?? "Erreur serveur");
-      }
+      setTimeout(() => router.push("/"), 800);
     } catch (err) {
       console.error(err);
-      toast.error("Impossible de contacter l’API.");
+      toast.error("Une erreur inattendue est survenue.");
     } finally {
       setLoading(false);
     }
-  };
-
-  const goSignup = (e: React.MouseEvent) => {
-    e.preventDefault();
-    router.push("/"); // vers connexion
   };
 
   return (
@@ -51,7 +41,7 @@ export default function Inscription() {
       <div className={styles.cardconnexion}>
         <h1 className={styles.titleconnexionandmembers}>Inscription</h1>
 
-        <form className={styles.formconnexion} onSubmit={handleLogin}>
+        <form className={styles.formconnexion} onSubmit={handleRegister}>
           <label htmlFor="email" className={styles.mailandpasswordtitle}>
             E-mail
           </label>
@@ -112,7 +102,6 @@ export default function Inscription() {
           <Link
             href="/"
             className={styles.buttonconnexionandmembers}
-            onClick={goSignup}
           >
             <svg
               viewBox="0 0 24 24"
