@@ -1,0 +1,153 @@
+/* Mise en page globale */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 24px;
+  background: #0f1115; /* fond sombre */
+  color: #e8eaf0;
+  font-family: sans-serif;
+}
+
+/* En-tête */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.headerActions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Board */
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* Carte (ticket) */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  backdrop-filter: blur(6px);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* Zone de texte */
+.cardTextarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 90px;
+  font: inherit;
+  color: #e8eaf0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 10px 12px;
+  outline: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.cardTextarea::placeholder {
+  color: #9aa3b2;
+}
+
+.cardTextarea:focus {
+  border-color: #5da9ff;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+/* Actions d'une carte */
+.cardActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* Boutons */
+.primaryBtn,
+.secondaryBtn,
+.dangerBtn,
+.linkBtn {
+  border: 1px solid transparent;
+  background: transparent;
+  color: inherit;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.06s ease;
+}
+
+/* Styles spécifiques */
+.primaryBtn {
+  background: linear-gradient(180deg, #2a6aff, #1446ff);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.primaryBtn:hover {
+  filter: brightness(1.05);
+}
+.primaryBtn:active {
+  transform: translateY(1px);
+}
+
+.secondaryBtn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+.secondaryBtn:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.dangerBtn {
+  background: rgba(252, 66, 66, 0.12);
+  border-color: rgba(252, 66, 66, 0.32);
+  color: #ffb4b4;
+}
+.dangerBtn:hover {
+  background: rgba(252, 66, 66, 0.18);
+}
+
+.linkBtn {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+.linkBtn:hover {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+/* État vide */
+.empty {
+  grid-column: 1 / -1;
+  padding: 32px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+}

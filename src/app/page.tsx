@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
@@ -12,7 +13,7 @@ export default function Home() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (loading) return;
 
@@ -22,15 +23,14 @@ export default function Home() {
     }
 
     setLoading(true);
-    try {
-      toast.success("Connexion simulée côté front ✅");
-      setTimeout(() => router.push("/Actuality"), 800);
-    } catch (err) {
-      console.error(err);
-      toast.error("Une erreur inattendue est survenue.");
-    } finally {
-      setLoading(false);
-    }
+    toast.success("Connexion simulée côté front ✅");
+
+    // Laisser le toast visible, puis naviguer vers /ticketspage
+    setTimeout(() => {
+      router.push("/Ticketspage");
+      // Option : garder le loader jusqu'au changement de page
+      // setLoading(false); // à réactiver si vous voulez l'arrêter avant la nav
+    }, 800);
   };
 
   return (
@@ -71,18 +71,29 @@ export default function Home() {
 
           <button
             type="submit"
-            className={styles.buttonconnexionandmembers}
+            className={`${styles.buttonconnexionandmembers} ${loading ? styles.loading : ""}`}
             disabled={loading}
             aria-busy={loading}
           >
-            <svg viewBox="0 0 24 24" className={styles.arrtwo} xmlns="http://www.w3.org/2000/svg">
-              <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
-            </svg>
-            <span className={styles.text}>{loading ? "Connexion..." : "Se connecter"}</span>
-            <span className={styles.circle}></span>
-            <svg viewBox="0 0 24 24" className={styles.arrone} xmlns="http://www.w3.org/2000/svg">
-              <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
-            </svg>
+            {loading ? (
+              <div className={styles.loadingWave} aria-hidden="true">
+                <div className={styles.loadingBar}></div>
+                <div className={styles.loadingBar}></div>
+                <div className={styles.loadingBar}></div>
+                <div className={styles.loadingBar}></div>
+              </div>
+            ) : (
+              <>
+                <svg viewBox="0 0 24 24" className={styles.arrtwo} xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+                </svg>
+                <span className={styles.text}>Se connecter</span>
+                <span className={styles.circle}></span>
+                <svg viewBox="0 0 24 24" className={styles.arrone} xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
+                </svg>
+              </>
+            )}
           </button>
 
           <p className={styles.titleconnexionandmembers}>Pas encore membre ?</p>
